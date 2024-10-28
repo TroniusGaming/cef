@@ -253,7 +253,7 @@ if (is_linux) {
 #
 
 # Enable support for Print Preview.
-assert(enable_print_preview)
+# assert(enable_print_preview)
 
 # Enable support for Widevine CDM.
 assert(enable_widevine)
