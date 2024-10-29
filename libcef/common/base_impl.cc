@@ -218,9 +218,10 @@ CEF_EXPORT void cef_log(const char* file,
 }
 
 CEF_EXPORT void cef_set_log_handler(LogMessageHandlerFunction handler) {
-  logging::SetLogMessageHandler([handler](int severity,
+  static LogMessageHandlerFunction gCefLogHandler = handler;
+  logging::SetLogMessageHandler([](int severity,
     const char* file, int line, size_t message_start, const std::string& str) -> bool {
-      return handler(severity, file, line, message_start, str.c_str());
+      return gCefLogHandler(severity, file, line, message_start, str.c_str());
   });
 }
 
