@@ -217,6 +217,14 @@ CEF_EXPORT void cef_log(const char* file,
   logging::LogMessage(file, line, severity).stream() << message;
 }
 
+CEF_EXPORT void cef_set_log_handler(int (*handler)(int severity,
+    const char* file, int line, size_t message_start, const char* str)) {
+  logging::SetLogMessageHandler([handler](int severity,
+    const char* file, int line, size_t message_start, const std::string& str) -> bool {
+      return handler(file, line, message_start, str.c_str());
+  });
+}
+
 CEF_EXPORT cef_platform_thread_id_t cef_get_current_platform_thread_id() {
   return base::PlatformThread::CurrentId();
 }

@@ -156,6 +156,16 @@ template std::string* MakeCheckOpString<std::string, std::string>(
     const char* name);
 #endif
 
+void SetLogMessageHandler(LogMessageHandlerFunction handler)
+{
+  ::logging::SetLogMessageHandler(handler);
+}
+
+LogMessageHandlerFunction GetLogMessageHandler()
+{
+  return ::logging::GetLogMessageHandler();
+}
+
 #if defined(OS_WIN)
 LogMessage::SaveLastError::SaveLastError() : last_error_(::GetLastError()) {}
 

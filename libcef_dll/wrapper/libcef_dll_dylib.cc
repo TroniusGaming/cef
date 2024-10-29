@@ -266,6 +266,7 @@ struct libcef_pointers {
   decltype(&cef_get_min_log_level) cef_get_min_log_level;
   decltype(&cef_get_vlog_level) cef_get_vlog_level;
   decltype(&cef_log) cef_log;
+  decltype(&cef_set_log_handler) cef_set_log_handler;
   decltype(&cef_string_list_alloc) cef_string_list_alloc;
   decltype(&cef_string_list_size) cef_string_list_size;
   decltype(&cef_string_list_value) cef_string_list_value;
@@ -487,6 +488,7 @@ int libcef_init_pointers(const char* path) {
   INIT_ENTRY(cef_get_min_log_level);
   INIT_ENTRY(cef_get_vlog_level);
   INIT_ENTRY(cef_log);
+  INIT_ENTRY(cef_set_log_handler);
   INIT_ENTRY(cef_string_list_alloc);
   INIT_ENTRY(cef_string_list_size);
   INIT_ENTRY(cef_string_list_value);
@@ -1422,6 +1424,12 @@ int cef_get_vlog_level(const char* file_start, size_t N) {
 NO_SANITIZE("cfi-icall")
 void cef_log(const char* file, int line, int severity, const char* message) {
   g_libcef_pointers.cef_log(file, line, severity, message);
+}
+
+NO_SANITIZE("cfi-icall")
+void cef_set_log_handler(int (*handler)(int severity,
+    const char* file, int line, size_t message_start, const char* str)) {
+  g_libcef_pointers.cef_set_log_handler(handler);
 }
 
 NO_SANITIZE("cfi-icall") cef_string_list_t cef_string_list_alloc() {

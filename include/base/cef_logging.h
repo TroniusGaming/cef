@@ -201,6 +201,15 @@ int GetVlogLevel(const char (&file)[N]) {
   return cef_get_vlog_level(file, N);
 }
 
+// Sets the Log Message Handler that gets passed every log message before
+// it's sent to other log destinations (if any).
+// Returns true to signal that it handled the message and the message
+// should not be sent to other log destinations.
+typedef bool (*LogMessageHandlerFunction)(int severity,
+    const char* file, int line, size_t message_start, const std::string& str);
+CEF_EXPORT void SetLogMessageHandler(LogMessageHandlerFunction handler);
+CEF_EXPORT LogMessageHandlerFunction GetLogMessageHandler();
+
 typedef int LogSeverity;
 const LogSeverity LOG_VERBOSE = -1;  // This is level 1 verbosity
 // Note: the log severities are used to index into the array of names,
