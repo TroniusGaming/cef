@@ -61,12 +61,13 @@ CEF_EXPORT void cef_log(const char* file,
                         int severity,
                         const char* message);
 
+typedef int (*LogMessageHandlerFunction)(int severity,
+    const char* file, int line, size_t message_start, const char* str);
 ///
 /// Add a log message. See the LogSeverity defines for supported |severity|
 /// values.
 ///
-CEF_EXPORT void cef_set_log_handler(int (*handler)(int severity,
-    const char* file, int line, size_t message_start, const char* str));
+CEF_EXPORT void cef_set_log_handler(LogMessageHandlerFunction handler);
 
 #ifdef __cplusplus
 }

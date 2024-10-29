@@ -205,8 +205,6 @@ int GetVlogLevel(const char (&file)[N]) {
 // it's sent to other log destinations (if any).
 // Returns true to signal that it handled the message and the message
 // should not be sent to other log destinations.
-typedef int (*LogMessageHandlerFunction)(int severity,
-    const char* file, int line, size_t message_start, const char* str);
 inline void SetLogMessageHandler(LogMessageHandlerFunction handler) {
   cef_set_log_handler(handler);
 }
